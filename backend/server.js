@@ -12,6 +12,24 @@ console.log(import.meta.url);
 
 app.use(express.static(path.join(__dirname, "../frontend")));
 
+const messages = [  
+    "Hello from the server!",
+  "Today is your lucky day!",
+  "Keep coding, you genius!",
+  "Async/await is awesome!",
+  "Fetch me if you can 😎"]
+
+app.get("/api/test", (req, res) => {
+    const hour = new Date().getHours();
+    let greeting = "hello!";
+    if(hour < 12) greeting = "Good morning!"
+    else if(hour < 18) greeting = "good afternoon!"
+    else greeting = "good evening!"
+    const rdIdx = Math.floor(Math.random() * messages.length);
+    res.json({ message: messages[rdIdx],
+        time: greeting
+     });
+})
 
 app.get("/", (req, res) => {
     res.json({ message: "hello from the goddamn backend" })    
