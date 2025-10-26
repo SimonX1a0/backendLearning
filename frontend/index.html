@@ -7,6 +7,9 @@
     <button onclick="displayMessage()">display message</button>
     <button onclick="greets()">display time</button>
     <button onclick="time()">display hour</button>
+    <input id="userInput" placeholder="Type a message" />
+    <button onclick="sendMessage()">Send</button>
+    <p id="serverReply" style="color: #fff"></p>
   </body>
 </html>
 
@@ -43,6 +46,23 @@ async function time(){
     document.getElementById("hour").textContent = data.message;
   } catch (error) {
     console.log("failed to fetch hour", error)
+  }
+}
+
+async function sendMessage(){
+  const input = document.getElementById("userInput").value;
+
+  try {
+    const res = await fetch("/api/echo", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({message: input})
+    });
+
+    const data = await res.json();
+    document.getElementById("serverReply").textContent = data.reply;
+  } catch (error) {
+    console.error("Failed to send message:", error)
   }
 }
 </script>

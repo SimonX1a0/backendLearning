@@ -11,6 +11,7 @@ const PORT = 3000;
 console.log(import.meta.url);
 
 app.use(express.static(path.join(__dirname, "../frontend")));
+app.use(express.json());
 
 const messages = [  
     "Hello from the server!",
@@ -52,6 +53,12 @@ app.get("/about", (req, res)=>{
 
 app.get("/contact", (req, res)=>{
     res.sendFile(path.join(__dirname, "../frontend", "contact.html"))
+})
+
+app.post("/api/echo", (req, res)=>{
+    const { message } = req.body;
+    console.log("received from client:", message);
+    res.json({reply: `Server received: ${message}`})
 })
 
 app.listen(PORT, ()=>{
