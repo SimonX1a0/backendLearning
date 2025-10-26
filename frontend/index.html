@@ -9,6 +9,8 @@
     <button onclick="time()">display hour</button>
     <input id="userInput" placeholder="Type a message" />
     <button onclick="getspecific()">get text</button>
+    <button onclick="deleteID()">delete</button>
+
     <p id="serverReply" style="color: #fff"></p>
   </body>
 </html>
@@ -71,5 +73,13 @@ async function getspecific(){
   const res = await fetch(`/${id}`);
   const data = await res.json();
   console.log("retrieved data", data.note.text);
+}
+async function deleteID(){
+  const id = document.getElementById("userInput").value;
+  const res = await fetch(`/api/notes/${id}`, {
+    method: "DELETE",
+  })
+  const data = await res.json()
+  console.log(data.message)
 }
 </script>
