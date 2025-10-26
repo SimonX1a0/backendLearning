@@ -7,8 +7,8 @@
     <button onclick="displayMessage()">display message</button>
     <button onclick="greets()">display time</button>
     <button onclick="time()">display hour</button>
-    <input oninput="sendMessage()" id="userInput" placeholder="Type a message" />
-    <button >Send</button>
+    <input id="userInput" placeholder="Type a message" />
+    <button onclick="update(1)">Send</button>
     <p id="serverReply" style="color: #fff"></p>
   </body>
 </html>
@@ -49,20 +49,32 @@ async function time(){
   }
 }
 
-async function sendMessage(){
-  const input = document.getElementById("userInput").value;
+// async function sendMessage(){
+//   const input = document.getElementById("userInput").value;
 
-  try {
-    const res = await fetch("/api/echo", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message: input })
-    })
-    const data = await res.json();
-    console.log("received ", data.reply)
-    document.getElementById("serverReply").textContent = data.reply;
-  } catch (error) {
-    console.error("Failed to send message:", error)
-  }
+//   try {
+//     const res = await fetch("/api/echo", {
+//       method: "POST",
+//       headers: { "Content-Type": "application/json" },
+//       body: JSON.stringify({ message: input })
+//     })
+//     const data = await res.json();
+//     console.log("received ", data.reply)
+//     document.getElementById("serverReply").textContent = data.reply;
+//   } catch (error) {
+//     console.error("Failed to send message:", error)
+//   }
+// }
+
+async function update(id){
+  const newText = document.getElementById("userInput").value;
+  const res = await fetch(`/api/notes/${id}`, {
+  method: "put",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({text: newText})
+  });
+
+  const data = await res.json();
+  console.log("updated data to be:", data.note.text);
 }
 </script>

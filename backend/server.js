@@ -13,6 +13,15 @@ console.log(import.meta.url);
 app.use(express.static(path.join(__dirname, "../frontend")));
 app.use(express.json());
 
+let notes = [
+  { id: 1, 
+    text: "Learn Express" 
+  },
+  { id: 2,
+    text: "Build an API" 
+  }
+];
+
 const messages = [  
     "Hello from the server!",
   "Today is your lucky day!",
@@ -60,6 +69,19 @@ app.post("/api/echo", (req, res)=>{
     console.log(`Server received message ${message}`);
     res.json({ reply: message });
 })
+
+
+app.put("/api/notes/:id", (req, res) => {
+    const { id } = req.params;
+    const { text } = req.body;
+    const note = notes.find(n => n.id == parseInt(id));
+    if(!note) return res.status(404).json({error: "note not found"});
+    note.text = text;
+    console.log(`Updating note ${id} with text: ${text}`);
+    res.json({ success: true, note });
+})
+
+
 
 app.listen(PORT, ()=>{
     console.log(`Server running on http://localhost: ${PORT}`)
