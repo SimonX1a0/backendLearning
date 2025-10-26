@@ -57,8 +57,8 @@ app.get("/contact", (req, res)=>{
 
 app.post("/api/echo", (req, res)=>{
     const { message } = req.body;
-    console.log("received from client:", message);
-    res.json({reply: `Server received: ${message}`})
+    console.log(`Server received message ${message}`);
+    res.json({ reply: message });
 })
 
 app.listen(PORT, ()=>{

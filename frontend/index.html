@@ -7,8 +7,8 @@
     <button onclick="displayMessage()">display message</button>
     <button onclick="greets()">display time</button>
     <button onclick="time()">display hour</button>
-    <input id="userInput" placeholder="Type a message" />
-    <button onclick="sendMessage()">Send</button>
+    <input oninput="sendMessage()" id="userInput" placeholder="Type a message" />
+    <button >Send</button>
     <p id="serverReply" style="color: #fff"></p>
   </body>
 </html>
@@ -55,11 +55,11 @@ async function sendMessage(){
   try {
     const res = await fetch("/api/echo", {
       method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({message: input})
-    });
-
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: input })
+    })
     const data = await res.json();
+    console.log("received ", data.reply)
     document.getElementById("serverReply").textContent = data.reply;
   } catch (error) {
     console.error("Failed to send message:", error)
