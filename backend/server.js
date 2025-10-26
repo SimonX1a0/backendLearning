@@ -70,6 +70,14 @@ app.post("/api/echo", (req, res)=>{
     res.json({ reply: message });
 })
 
+app.get("/:id", (req, res) => {
+    const {id} = req.params;
+    const idInt = parseInt(id);
+    if(isNaN(idInt)) return res.json({ error: "not an integer"}).status(400);
+    const note = notes.find(n => n.id === idInt);
+    if(!note) return res.status(404).json({error: "note not found"});
+    res.send({success: true, note});
+})
 
 app.put("/api/notes/:id", (req, res) => {
     const { id } = req.params;

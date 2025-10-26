@@ -8,7 +8,7 @@
     <button onclick="greets()">display time</button>
     <button onclick="time()">display hour</button>
     <input id="userInput" placeholder="Type a message" />
-    <button onclick="update(1)">Send</button>
+    <button onclick="getspecific()">get text</button>
     <p id="serverReply" style="color: #fff"></p>
   </body>
 </html>
@@ -66,15 +66,10 @@ async function time(){
 //   }
 // }
 
-async function update(id){
-  const newText = document.getElementById("userInput").value;
-  const res = await fetch(`/api/notes/${id}`, {
-  method: "put",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({text: newText})
-  });
-
+async function getspecific(){
+  const id = document.getElementById("userInput").value;
+  const res = await fetch(`/${id}`);
   const data = await res.json();
-  console.log("updated data to be:", data.note.text);
+  console.log("retrieved data", data.note.text);
 }
 </script>
