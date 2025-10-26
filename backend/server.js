@@ -31,6 +31,17 @@ app.get("/api/test", (req, res) => {
      });
 })
 
+app.get("/api/greetings", (req, res)=>{
+    res.json({message: "Surprise motherfucker"});
+})
+
+app.get("/api/time", (req, res)=>{
+    const hour = new Date().getHours();
+    if(hour < 12) res.json({message: "good morning"});
+    else if(hour < 18 ) res.json({message: `good afternoon it's ${hour} pm`});
+    else res.json({message: "good evening"});
+})
+
 app.get("/", (req, res) => {
     res.json({ message: "hello from the goddamn backend" })    
 })
