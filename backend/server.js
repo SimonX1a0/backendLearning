@@ -1,12 +1,13 @@
 import express from "express";
 import path from "path"
 import { fileURLToPath } from "url";
+import { PORT } from './config/eng.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-const PORT = 3000;
+
 
 console.log(import.meta.url);
 
@@ -105,3 +106,5 @@ app.delete("/api/notes/:id", (req, res) => {
 app.listen(PORT, ()=>{
     console.log(`Server running on http://localhost: ${PORT}`)
 })
+
+export default app;
